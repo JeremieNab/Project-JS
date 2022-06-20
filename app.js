@@ -1,11 +1,11 @@
-// récupérer les éléments du DOM
+//Recover the elements of the DOM
 const cases = [...document.getElementsByClassName("case")]; // nodelist -> array
 let joueur = document.getElementById("joueur");
 let score1 = document.getElementById("score1");
 let score2 = document.getElementById("score2");
 let scoreNul = document.getElementById("scoreNul");
 
-// mémoire des stats du jeu
+//Memory of the game stats
 let state = {
   joueurEnCours: 1,
   scoreJ1: 0,
@@ -46,7 +46,7 @@ const verifierVictoire = () => {
     (state.c4 == state.c5 && state.c5 == state.c6 && state.c4 > 0) ||
     (state.c7 == state.c8 && state.c8 == state.c9 && state.c7 > 0)
   ) {
-    console.log("winner !");
+    console.log(" winner !");
     return true;
   } else if (
     state.c1 !== 0 &&
@@ -68,7 +68,7 @@ const verifierVictoire = () => {
 const jouerCase = (e) => {
   let idCase = e.target.id;
 
-  // si case déjà jouée on ne fait rien
+  // If box already played we do nothing
   if (state[idCase] !== 0) return;
 
   state[idCase] = state.joueurEnCours;
@@ -76,43 +76,41 @@ const jouerCase = (e) => {
   let isVctoire = verifierVictoire();
 
   if (isVctoire === true) {
-    // si victoire
-
+    //if victory
     alert("Le gagnant est le joueur " + state.joueurEnCours);
 
-    if (state.joueurEnCours == 1) {
-      state.scoreJ1++;
-      score1.textContent = state.scoreJ1;
-    } else {
-      state.scoreJ2++;
-      score2.textContent = state.scoreJ2;
-    }
+        if (state.joueurEnCours == 1) {
+        state.scoreJ1++;
+        score1.textContent = state.scoreJ1;
+        } else {
+        state.scoreJ2++;
+        score2.textContent = state.scoreJ2;
+        }
 
     resetState();
     cases.forEach((c) => (c.textContent = ""));
   } else if (isVctoire === null) {
-    // si nul
-
+    // and null
     alert("Match nul !");
 
     state.matchNul++;
     scoreNul.textContent = state.matchNul;
-    joueur.textContent = "1";
+    joueur.textContent = " 1";
 
     resetState();
     cases.forEach((c) => (c.textContent = ""));
   } else if (isVctoire === false) {
-    // sinon on continue le jeu
-    if (state.joueurEnCours == 1) {
-      state.joueurEnCours = 2;
-      e.target.textContent = "X";
-      joueur.textContent = "2";
-    } else {
-      state.joueurEnCours = 1;
-      e.target.textContent = "O";
-      joueur.textContent = "1";
+    //Otherwise we continue the game
+        if (state.joueurEnCours == 1) {
+            state.joueurEnCours = 2;
+            e.target.textContent = "X";
+            joueur.textContent = "2";
+        } else {
+            state.joueurEnCours = 1;
+            e.target.textContent = "O";
+            joueur.textContent = "1";
+        }
     }
-  }
 };
 
 cases.forEach((el) => {
